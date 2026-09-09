@@ -1,4 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+/** Decorative layers render after hydration so SSR markup stays identical. */
+function useMounted() {
+  const [m, setM] = useState(false);
+  useEffect(() => setM(true), []);
+  return m;
+}
 
 type Star = {
   left: string;
@@ -24,6 +31,9 @@ export function StarField({ count = 90, className = "" }: { count?: number; clas
       duration: `${3 + rand(i, 5) * 5}s`,
     }));
   }, [count]);
+
+  const mounted = useMounted();
+  if (!mounted) return null;
 
   return (
     <div aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
@@ -60,6 +70,9 @@ export function Particles({ count = 18 }: { count?: number }) {
       opacity: 0.15 + rand(i, 5) * 0.5,
     }));
   }, [count]);
+
+  const mounted = useMounted();
+  if (!mounted) return null;
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
