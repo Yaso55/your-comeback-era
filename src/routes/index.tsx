@@ -47,7 +47,7 @@ const markers: Marker[] = [
 
 function Index() {
   const [entered, setEntered] = useState(false);
-  const [active, setActive] = useState(markers[0].id);
+  const [active, setActive] = useState<string>("chapter-01");
   const sound = useSound();
 
   // Track which chapter is on screen for the progress rail.
